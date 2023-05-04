@@ -74,13 +74,13 @@ tmon="$(vnstat -i eth0 -m | grep "`date +"%b '%y"`" | awk '{print $9" "substr ($
 cpu_usage1="$(ps aux | awk 'BEGIN {sum=0} {sum+=$3}; END {print sum}')"
 cpu_usage="$((${cpu_usage1/\.*} / ${corediilik:-1}))"
 cpu_usage+=" %"
-ISP=$(curl -s ipinfo.io/org?token=7578ac19afd785 | cut -d " " -f 2-10 )
-CITY=$(curl -s ipinfo.io/city?token=7578ac19afd785 )
-WKT=$(curl -s ipinfo.io/timezone?token=7578ac19afd785 )
+ISP=$(cat /root/.isp)
+
+WKT=$( date -d "0 days" +"%d-%m-%Y | %X" )"
 DAY=$(date +%A)
 DATE=$(date +%m/%d/%Y)
 DATE2=$(date -R | cut -d " " -f -5)
-IPVPS=$(curl -s ipinfo.io/ip?token=7578ac19afd785 )
+IPVPS=$( curl -s https://ipinfo.io/ip/ )
 cname=$( awk -F: '/model name/ {name=$2} END {print name}' /proc/cpuinfo )
 cores=$( awk -F: '/model name/ {core++} END {print core}' /proc/cpuinfo )
 freq=$( awk -F: ' /cpu MHz/ {freq=$2} END {print freq}' /proc/cpuinfo )
@@ -94,7 +94,7 @@ echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━�
 echo -e "\e[33m OS            \e[0m:  "`hostnamectl | grep "Operating System" | cut -d ' ' -f5-`	
 echo -e "\e[33m IP            \e[0m:  $IPVPS"	
 echo -e "\e[33m ASN           \e[0m:  $ISP"
-echo -e "\e[33m CITY          \e[0m:  $CITY"
+
 echo -e "\e[33m DOMAIN        \e[0m:  $domain"	
 echo -e "\e[33m DATE & TIME   \e[0m:  $DATE2"	
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
