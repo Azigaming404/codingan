@@ -2,13 +2,7 @@
 MYIP=$(curl -sS ipv4.icanhazip.com)
 echo "Checking VPS"
 #########################
-IZIN=$(curl -sS ipv4.icanhazip.com | awk '{print $4}' | grep $MYIP)
-if [ $MYIP = $IZIN ]; then
-echo -e "\e[32mPermission Accepted...\e[0m"
-else
-echo -e "\e[31mPermission Denied!\e[0m";
-exit 0
-fi
+
 #EXPIRED
 expired=$(curl -sS ipv4.icanhazip.com | grep $MYIP | awk '{print $3}')
 echo $expired > /root/expired.txt
