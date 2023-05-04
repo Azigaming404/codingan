@@ -85,7 +85,7 @@ clear
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "                 • KANG HORY VPN PREMIUM •                 "
 echo -e "\e[33m ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
-echo -e "\e[33m OS            \e[0m:  `hostnamectl | grep "Operating System" | cut -d ' ' -f5-`	
+echo -e "\e[33m OS            \e[0m:  "`hostnamectl" | grep "Operating System" | cut -d ' ' -f5-`	
 echo -e "\e[33m IP            \e[0m:  $IPVPS"	
 echo -e "\e[33m ASN           \e[0m:  $ISP"
 
