@@ -244,7 +244,7 @@ until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 
 read -rp " Input Username : " -e user
 read -rp " input password : " -e pass
-reqd -rp " input limit kuota :" -e Quota
+read -rp " input limit kuota :" -e Quota
 aji=cyber-$pass
       
 if [ -z $user ]; then
