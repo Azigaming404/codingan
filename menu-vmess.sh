@@ -283,7 +283,7 @@ menu
 		fi
 	done
 
-uuid=$(cat /etc/pass)
+uuid=$aji
 read -p "   Expired (days): " masaaktif
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#vmess$/a\### '"$user $exp"'\
