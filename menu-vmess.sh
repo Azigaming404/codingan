@@ -243,9 +243,9 @@ none="$(cat ~/log-install.txt | grep -w "Vmess None TLS" | cut -d: -f2|sed 's/ /
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 
 read -rp " Input Username : " -e user
-read -rp " input password : " -e pass
+
 read -rp " input limit kuota :" -e Quota
-aji=cyber-$pass
+
       
 if [ -z $user ]; then
 echo -e "$COLOR1│${NC} [Error] Username cannot be empty "
@@ -276,7 +276,7 @@ menu
 	done
 
 
-uuid=$aji
+uuid=(cat /proc/sys/kernel/random/uuid)
 read -p "   Expired (days): " masaaktif
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#vmess$/a\### '"$user $exp"'\
@@ -357,7 +357,64 @@ if [[ "${DATADB}" != '' ]]; then
 fi
 echo "### ${user} ${exp} ${uuid} ${Quota}" >>/etc/vmess/.vmess.db
 
+cat >/home/vps/public_html/vmess-$user.yaml <<-END
 
+# Format Vmess WS TLS
+
+- name: Vmess-$user-WS TLS
+  type: vmess
+  server: ${domain}
+  port: 443
+  uuid: ${uuid}
+  alterId: 0
+  cipher: auto
+  udp: true
+  tls: true
+  skip-cert-verify: true
+  servername: ${domain}
+  network: ws
+  ws-opts:
+    path: /vmess
+    headers:
+      Host: ${domain}
+
+# Format Vmess WS Non TLS
+
+- name: Vmess-$user-WS Non TLS
+  type: vmess
+  server: ${domain}
+  port: 80
+  uuid: ${uuid}
+  alterId: 0
+  cipher: auto
+  udp: true
+  tls: false
+  skip-cert-verify: false
+  servername: ${domain}
+  network: ws
+  ws-opts:
+    path: /vmess
+    headers:
+      Host: ${domain}
+
+# Format Vmess gRPC
+
+- name: Vmess-$user-gRPC (SNI)
+  server: ${domain}
+  port: 443
+  type: vmess
+  uuid: ${uuid}
+  alterId: 0
+  cipher: auto
+  network: grpc
+  tls: true
+  servername: ${domain}
+  skip-cert-verify: true
+  grpc-opts:
+    grpc-service-name: vmess-grpc
+
+
+END
 clear
 echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
 echo -e "$COLOR1│${NC} ${COLBG1}            • CREATE VMESS USER •              ${NC} $COLOR1│$NC"
@@ -373,7 +430,7 @@ echo -e "$COLOR1 ${NC} id            : ${uuid}"
 echo -e "$COLOR1 ${NC} alterId       : 0" 
 echo -e "$COLOR1 ${NC} Security      : auto" 
 echo -e "$COLOR1 ${NC} Network       : ws" 
-echo -e "$COLOR1 ${NC} Limit (GB)    : $Quota" 
+echo -e "$COLOR1 ${NC} Limit (GB)    : $Quota GB" 
 
 echo -e "$COLOR1 ${NC} Path          : /vmess" 
 echo -e "$COLOR1 ${NC} Path WSS      : wss://bug.com/vmess" 
@@ -382,12 +439,13 @@ echo -e "$COLOR1└────────────────────�
 echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
 echo -e "$COLOR1 ${NC} Link TLS : "
 echo -e "$COLOR1 ${NC} ${vmesslink1}" 
-echo -e "$COLOR1 ${NC} "
+echo -e "$COLOR1 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC} "
 echo -e "$COLOR1 ${NC} Link none TLS : "
 echo -e "$COLOR1 ${NC} ${vmesslink2}" 
-echo -e "$COLOR1 ${NC} "
+echo -e "$COLOR1 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC} "
 echo -e "$COLOR1 ${NC} Link GRPC : "
 echo -e "$COLOR1 ${NC} ${vmesslink3}"
+echo -e "$COLOR1 ${NC} Format OpenClash : http://${domain}:81/vmess-$user.yaml"
 echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}" 
 echo -e "$COLOR1┌────────────────────── BY ───────────────────────┐${NC}"
 echo -e "$COLOR1│${NC}                 • CyberVPN •                 $COLOR1│$NC"
