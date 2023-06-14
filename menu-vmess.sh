@@ -275,25 +275,6 @@ menu
 		fi
 	done
 
-if [ ! -e /etc/vmess ]; then
-  mkdir -p /etc/vmess
-fi
-
-if [ -z ${Quota} ]; then
-  Quota="0"
-fi
-
-c=$(echo "${Quota}" | sed 's/[^0-9]*//g')
-d=$((${c} * 1024 * 1024 * 1024))
-
-if [[ ${c} != "0" ]]; then
-  echo "${d}" >/etc/vmess/${user}
-fi
-DATADB=$(cat /etc/xray/config.json | grep "^### " | grep -w "${user}" | awk '{print $2}')
-if [[ "${DATADB}" != '' ]]; then
-  sed -i "/\b${user}\b/d" /etc/vmess/.vmess.db
-fi
-echo "### ${user} ${exp} ${uuid} ${Quota}" >>/etc/vmess/.vmess.db
 
 uuid=$aji
 read -p "   Expired (days): " masaaktif
@@ -356,6 +337,27 @@ vmesslink2="vmess://$(echo $ask | base64 -w 0)"
 vmesslink3="vmess://$(echo $grpc | base64 -w 0)"
 systemctl restart xray > /dev/null 2>&1
 service cron restart > /dev/null 2>&1
+if [ ! -e /etc/vmess ]; then
+  mkdir -p /etc/vmess
+fi
+
+if [ -z ${Quota} ]; then
+  Quota="0"
+fi
+
+c=$(echo "${Quota}" | sed 's/[^0-9]*//g')
+d=$((${c} * 1024 * 1024 * 1024))
+
+if [[ ${c} != "0" ]]; then
+  echo "${d}" >/etc/vmess/${user}
+fi
+DATADB=$(cat /etc/xray/config.json | grep "^### " | grep -w "${user}" | awk '{print $2}')
+if [[ "${DATADB}" != '' ]]; then
+  sed -i "/\b${user}\b/d" /etc/vmess/.vmess.db
+fi
+echo "### ${user} ${exp} ${uuid} ${Quota}" >>/etc/vmess/.vmess.db
+
+
 clear
 echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
 echo -e "$COLOR1│${NC} ${COLBG1}            • CREATE VMESS USER •              ${NC} $COLOR1│$NC"
