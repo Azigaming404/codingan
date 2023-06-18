@@ -78,17 +78,34 @@ echo -e "07.MENU IPSEC (L2TP & PPTP)"
 
 echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
 echo -e "${GREEN}| \E[44;1;39m            °FEATURE°               \E[0m|"
-echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
 echo -e "${LIGHT}"
 echo -e "08.INFO RUNNING"
 echo -e "09.TRIAL GENERATOR"
 echo -e "10.SETTINGS"
-echo -e "11.ABOUT"
+
 echo -e ""
 echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo -e "${CYAN}         SCRIPT BY CYBERVPN"
 
 echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
-
+echo
+read -p " Select menu : " opt
+echo -e ""
+case $opt in
+01 | 1) clear ; menu-ssh ;;
+02 | 2) clear ; udp ;;
+03 | 3) clear ; menu-vmess ;;
+04 | 4) clear ; menu-vless ;;
+05 | 5) clear ; menu-ss ;;
+06 | 6) clear ; menu-trojan ;;
+07 | 7) clear ; menu-ipsec ;;
+08 | 8) clear ; running ;;
+09 | 9) clear ; menu-trial ;;
+10) clear ; setting ;;
+100) clear ; $up2u ;;
+00 | 0) clear ; menu ;;
+*) clear ; menu ;;
+esac
 
