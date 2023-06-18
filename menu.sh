@@ -63,9 +63,9 @@ reboot
 exit 0
 fi
 clear
-echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
 echo -e "${GREEN}| \E[44;1;39m         °MENU SERVICE°             \E[0m|"
-echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
 
 echo -e "${LIGHT}"
 echo -e "01.MENU SSH WEBSOCKET"
@@ -76,13 +76,14 @@ echo -e "05.MENU SHADOWSOCKS"
 echo -e "06.MENU TROJAN"
 echo -e "07.MENU IPSEC (L2TP & PPTP)"
 
-echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
 echo -e "${GREEN}| \E[44;1;39m            °FEATURE°               \E[0m|"
-echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m${NC}"
 echo -e "${LIGHT}"
 echo -e "08.INFO RUNNING"
 echo -e "09.TRIAL GENERATOR"
 echo -e "10.SETTINGS"
+echo -e "11.Back to terminal"
 
 echo -e ""
 echo -e "${PURPLE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
@@ -104,6 +105,7 @@ case $opt in
 08 | 8) clear ; running ;;
 09 | 9) clear ; menu-trial ;;
 10) clear ; setting ;;
+11) clear ; menu1 ;;
 100) clear ; $up2u ;;
 00 | 0) clear ; menu ;;
 *) clear ; menu ;;
